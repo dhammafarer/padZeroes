@@ -1,8 +1,10 @@
 const fs = require('fs')
+const path = require('path')
 const R = require('ramda')
 const chalk = require('chalk')
 
-const dir = process.argv[2] + '/'
+const dir = path.resolve(process.argv[2]) + '/'
+console.log(dir)
 
 const renameFile = renameFileIn.bind(this, dir)
 
@@ -22,10 +24,12 @@ prefZeroes(dir)
 function renameFileIn (dir, names) {
   const [oldName, newName] = names
 
-  fs.rename(dir + oldName, dir + newName, (err) => {
-    if (err) throw err
+  try {
+    fs.rename(dir + oldName, dir + newName)
     console.log(`File ${chalk.yellow(oldName)} renamed to ${chalk.yellow(newName)}`)
-  })
+  } catch (err) {
+    console.log(error)
+  }
 }
 
 function readFileNamesFromDir (dir) {
