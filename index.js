@@ -1,19 +1,20 @@
 const fs = require('fs')
 const R = require('ramda')
+const chalk = require('chalk')
 
 const dir = process.argv[2] + '/'
 
 const renameFile = renameFileIn.bind(this, dir)
 
 const prefZeroes = R.compose(
-  R.tap(a => console.log(`${a.length} files renamed.`)),
+  R.tap(a => console.log(chalk.green(`${a.length} files renamed.`))),
   R.forEach(renameFile),
   R.map(generatePadding),
   R.filter(a => a[1] > 0),
   zipWithPadding,
   R.reduce(processFiles, {files: [], digits: []}),
   readFileNamesFromDir,
-  R.tap(a => console.log('Reading directory contents..'))
+  R.tap(a => console.log(chalk.blue('Reading directory contents..')))
 )
 
 prefZeroes(dir)
@@ -23,7 +24,7 @@ function renameFileIn (dir, names) {
 
   fs.rename(dir + oldName, dir + newName, (err) => {
     if (err) throw err
-    console.log(`File ${oldName} renamed to ${newName}`)
+    console.log(`File ${chalk.yellow(oldName)} renamed to ${chalk.yellow(newName)}`)
   })
 }
 
