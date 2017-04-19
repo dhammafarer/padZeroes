@@ -4,7 +4,6 @@ const R = require('ramda')
 const chalk = require('chalk')
 
 const dir = path.resolve(process.argv[2]) + '/'
-console.log(dir)
 
 const renameFile = renameFileIn.bind(this, dir)
 
@@ -60,9 +59,6 @@ function zipWithPadding ({files, digits, padding}) {
   return files.map((f, idx) => {
     return [f, pads[idx]]
   })
-}
-
-function checkPadding () {
 }
 
 function generatePadding (arr) {
